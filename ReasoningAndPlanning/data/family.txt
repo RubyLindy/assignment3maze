@@ -1,0 +1,5 @@
+parent(joost,leon)
+parent(joost,sacha)
+parent(peter,joost)
+parent(Z,X)&parent(Z,Y)&!=(X,Y)>+sibling(X,Y)
+parent(X,Y)&parent(Y,Z)>+grandparent(X,Z)

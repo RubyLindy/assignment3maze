@@ -7,3 +7,7 @@
 #They are processed by the agent as new facts into the appropriate knowledge bases (beliefs, desires, intentions).
 #The exception is the addition action, of which the predicate is added to the facts during inference.
 #Add your program rules below:
+
+at(X) & haveKey(K) & doorAt(X,K) > _open(X,K) 
+at(X) & keyAt(X,K) > _grab(X,K) 
+at(X) & link(X,Y) > _move(X,Y) 

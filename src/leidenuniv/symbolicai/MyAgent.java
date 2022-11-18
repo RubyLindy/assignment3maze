@@ -34,8 +34,23 @@ public class MyAgent extends Agent {
 		//substitution is the one we are currently building recursively.
 		//conditions is the list of conditions you  still need to find a subst for (this list shrinks the further you get in the recursion).
 		//facts is the list of predicates you need to match against (find substitutions so that a predicate form the conditions unifies with a fact)
-
-		return false;
+			
+		if(conditions.isEmpty()) {
+			return true;
+		}//if stop
+		else {
+			Predicate condition = conditions.firstElement();
+			conditions.remove(0);
+			HashMap<String, String> unification = new HashMap<String, String>();
+			for (Predicate fact: facts.values()){
+				unification = unifiesWith(condition,fact);
+				if(substitute(condition, unification) != null) {
+					substitution.putAll(unification);
+				}//if
+			}//for
+			allSubstitutions.add(substitution);
+		}//else
+		return findAllSubstitions(allSubstitutions, substitution, conditions, facts);
 	}
 
 	@Override
@@ -46,7 +61,21 @@ public class MyAgent extends Agent {
 		//Please note because f is bound and p potentially contains the variables, unifiesWith is NOT symmetrical
 		//So: unifiesWith("human(X)","human(joost)") returns X=joost, while unifiesWith("human(joost)","human(X)") returns null 
 		//If no subst is found it returns null
-		return null;
+
+		HashMap<String, String> s = new HashMap<String, String>();
+		boolean uni = false;
+		if (!(p.getName() == f.getName())){
+			return null;
+		}
+		for(int i = 0; i < p.getTerms().size(); i++) {
+			if (p.getTerm(i).var) {
+				s.put(p.getTerm(i).toString(), f.getTerm(i).toString());
+				uni = true;
+			}//if
+		}//for
+		if (!uni)
+			return null;
+		return s;
 	}
 
 	@Override
@@ -54,7 +83,17 @@ public class MyAgent extends Agent {
 		// Substitutes all variable terms in predicate <old> for values in substitution <s>
 		//(only if a key is present in s matching the variable name of course)
 		//Use Term.substitute(s)
-		return null;
+
+		//bestaat er een key in s die terug komt in old
+		//if ja check voor alle vectoren of ze een term in s gelijk hebben
+
+		Predicate nieuw = new Predicate(old.toString());
+
+		for(int i = 0; i < nieuw.getTerms().size(); i++) {
+			nieuw.getTerm(i).substitute(s);
+		}//for
+
+		return nieuw;
 	}
 
 	@Override

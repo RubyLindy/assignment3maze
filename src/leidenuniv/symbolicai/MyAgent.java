@@ -36,7 +36,7 @@ public class MyAgent extends Agent {
 		//facts is the list of predicates you need to match against (find substitutions so that a predicate form the conditions unifies with a fact)
 			
 		if(conditions.isEmpty()) {
-			return true;
+			return false;
 		}//if stop
 		else {
 			Predicate condition = conditions.firstElement();
@@ -48,9 +48,13 @@ public class MyAgent extends Agent {
 					substitution.putAll(unification);
 				}//if
 			}//for
-			allSubstitutions.add(substitution);
 		}//else
-		return findAllSubstitions(allSubstitutions, substitution, conditions, facts);
+		findAllSubstitions(allSubstitutions, substitution, conditions, facts);
+		allSubstitutions.add(substitution);
+		if (substitution != null)
+			return true;
+		else
+			return false;
 	}
 
 	@Override

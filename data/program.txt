@@ -8,6 +8,6 @@
 #The exception is the addition action, of which the predicate is added to the facts during inference.
 #Add your program rules below:
 
-at(X) & haveKey(K) & doorAt(X,K) > _open(X,K) 
-at(X) & keyAt(X,K) > _grab(X,K) 
-at(X) & link(X,Y) > _move(X,Y) 
+location(X) & haveKey(K) & doorAt(X,K) > _open(X,K) 
+location(X) & keyAt(X,K) > _grab(X,K) 
+location(X) & link(X,Y) > _goto(X,Y) 

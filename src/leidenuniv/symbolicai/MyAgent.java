@@ -19,8 +19,14 @@ public class MyAgent extends Agent {
 		//It starts with an empty list of facts. When ready, it returns a new KB of ground facts (bounded).
 		//The resulting KB includes all deduced predicates, actions, additions and deletions, and goals.
 		//These are then processed by processFacts() (which is already implemented for you)
+		// 		processFacts() adds all the facts in a given knowledge base to the correct knowledge base.
 		//HINT: You should assume that forwardChain only allows *bound* predicates to be added to the facts list for now.
 		
+		KB kim = new KB();
+		// for () {}
+		boolean debug = false;
+		processFacts(kb, believes, desires, intentions, debug);
+
 		return null;
 	}
 
@@ -36,21 +42,27 @@ public class MyAgent extends Agent {
 		//facts is the list of predicates you need to match against (find substitutions so that a predicate form the conditions unifies with a fact)
 			
 		if(conditions.isEmpty()) {
-			return false;
+			if (substitution != null) {
+				allSubstitutions.add(substitution);
+				return true;
+			}//if true
+			else
+				return false;
 		}//if stop
 		else {
-			Predicate condition = conditions.firstElement();
-			conditions.remove(0);
+			Vector<Predicate> copy = new Vector<Predicate>();
+			copy.addAll(conditions);
+			Predicate condition = substitute(copy.firstElement(), substitution);
+			copy.remove(0);
 			HashMap<String, String> unification = new HashMap<String, String>();
 			for (Predicate fact: facts.values()){
 				unification = unifiesWith(condition,fact);
-				if(substitute(condition, unification) != null) {
+				if(unification != null) {
+					findAllSubstitions(allSubstitutions, substitution, copy, facts);
 					substitution.putAll(unification);
 				}//if
 			}//for
 		}//else
-		findAllSubstitions(allSubstitutions, substitution, conditions, facts);
-		allSubstitutions.add(substitution);
 		if (substitution != null)
 			return true;
 		else

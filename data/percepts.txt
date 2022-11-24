@@ -9,4 +9,4 @@
 at(X) & passage(Y) > +link(X,Y)
 at(X) & key(K) > +keyAt(X,K)
 at(X) & locked(K) > +doorAt(X,K)
-at(X) > -location(Y) & +location(X)
+at(X) > +location(X)

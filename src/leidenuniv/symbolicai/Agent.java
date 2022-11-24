@@ -15,10 +15,10 @@ import leidenuniv.symbolicai.logic.Term;
 public abstract class Agent {
 	KB perceptRules,programRules,actionRules; //these are the static rules you get from loading your program
 	KB believes,desires, intentions;//these are dynamic facts, believes are facts, intentions are actions that are possible, desires are goal predicates
-	boolean HUMAN_DECISION=false;//change to false if you want the decide step to make the decision rather than you (check code there)
+	boolean HUMAN_DECISION=true;//change to false if you want the decide step to make the decision rather than you (check code there)
 	//boolean HUMAN_DECISION=true;//change to false if you want the decide step to make the decision rather than you (check code there)
 	//boolean DEBUG=true;
-	boolean DEBUG=false;
+	boolean DEBUG=true;
 	
 	public Agent() {
 		believes=new KB();

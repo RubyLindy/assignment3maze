@@ -2,6 +2,7 @@ package leidenuniv.symbolicai;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Vector;
 
 import leidenuniv.symbolicai.logic.KB;
@@ -22,10 +23,29 @@ public class MyAgent extends Agent {
 		// 		processFacts() adds all the facts in a given knowledge base to the correct knowledge base.
 		//HINT: You should assume that forwardChain only allows *bound* predicates to be added to the facts list for now.
 		
-		KB kim = new KB();
+		KB copy = new KB();
+
+		Collection<HashMap<String, String>> allSubstitutions = new HashSet<>(); //mag geen arraylist zijn
+		HashMap<String, Predicate> facts = new HashMap<String, Predicate>();
+		
+		
+		for (int i = 0; i < kb.rules().size(); i++) {
+			Sentence sentence = kb.rules().get(i);
+			// for (int j = 0; j <kb.rules().conclusions.size(); j++) {
+
+			// }
+		}
+
+		for (int i = 0; i < kb.rules().size(); i++) {
+			HashMap<String, String> substitution = new HashMap<String, String>();
+			// for (int j = 0; j <kb.rules().size(); j++)
+			findAllSubstitions(allSubstitutions, substitution, kb.rules().get(i).conditions, facts);
+		}
+
+		// KB kim = new KB();
 		// for () {}
-		boolean debug = false;
-		processFacts(kb, believes, desires, intentions, debug);
+		// boolean debug = false;
+		// processFacts(kb, believes, desires, intentions, debug);
 
 		return null;
 	}
@@ -46,23 +66,39 @@ public class MyAgent extends Agent {
 				allSubstitutions.add(substitution);
 				return true;
 			}//if true
-			else
-				return false;
+			return false;
 		}//if stop
+
 		else {
+			
 			Vector<Predicate> copy = new Vector<Predicate>();
 			copy.addAll(conditions);
 			Predicate condition = substitute(copy.firstElement(), substitution);
 			copy.remove(0);
 			HashMap<String, String> unification = new HashMap<String, String>();
-			for (Predicate fact: facts.values()){
-				unification = unifiesWith(condition,fact);
-				if(unification != null) {
-					findAllSubstitions(allSubstitutions, substitution, copy, facts);
-					substitution.putAll(unification);
-				}//if
-			}//for
+
+			if (condition.not) {
+				if(condition.not())
+					findAllSubstitions(allSubstitutions, substitution, conditions, facts);
+			}//if not
+			
+			else if (condition.eql) {
+				if(condition.eql()) 
+					findAllSubstitions(allSubstitutions, substitution, conditions, facts);
+			}//else if eql
+
+			else {
+				for (Predicate fact: facts.values()){
+					unification = unifiesWith(condition,fact);
+					if(unification != null) {
+						substitution.putAll(unification);
+						findAllSubstitions(allSubstitutions, substitution, copy, facts);
+					}//if
+				}//for
+			}//else
+
 		}//else
+
 		if (substitution != null)
 			return true;
 		else
@@ -82,7 +118,7 @@ public class MyAgent extends Agent {
 		boolean uni = false;
 		if (!(p.getName() == f.getName())){
 			return null;
-		}
+		}//if name
 		for(int i = 0; i < p.getTerms().size(); i++) {
 			if (p.getTerm(i).var) {
 				s.put(p.getTerm(i).toString(), f.getTerm(i).toString());

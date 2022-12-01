@@ -47,7 +47,6 @@ public class MyAgent extends Agent {
 
 		while (!op) {
 			op = true;
-			System.out.println(facts.size());
 			for (int i = 0; i < kb.rules().size(); i++) {
 				int count = facts.size();
 				allSubstitutions = new HashSet<>();
@@ -55,9 +54,7 @@ public class MyAgent extends Agent {
 				HashMap<String, String> substitution = new HashMap<String, String>();
 				conditions = kb.rules().get(i).conditions;
 				// findAllSubstitions(allSubstitutions, substitution, conditions, facts);
-				System.out.println(kb.rules().get(i));
 				if (findAllSubstitions(allSubstitutions, substitution, conditions, facts)) {
-					System.out.println("true");
 					for (HashMap<String, String> sub : allSubstitutions) {
 						for (int j = 0; j < kb.rules().get(i).conclusions.size(); j++) {
 							Predicate pred = substitute(kb.rules().get(i).conclusions.get(j), sub);
@@ -72,7 +69,6 @@ public class MyAgent extends Agent {
 					op = false;
 
 			} // for i
-			System.out.println(facts.size());
 		} // while
 
 		return copy;
@@ -102,7 +98,6 @@ public class MyAgent extends Agent {
 			HashMap<String, String> copySubstitution = new HashMap<String, String>();
 			copySubstitution.putAll(substitution);
 
-			System.out.println("Sub found");
 			allSubstitutions.add(copySubstitution);
 			return true;
 
@@ -137,9 +132,7 @@ public class MyAgent extends Agent {
 			else {
 				for (Predicate fact : facts.values()) {
 					unification = unifiesWith(condition, fact);
-					System.out.println(condition);
 					if (unification != null) {
-						System.out.println(true);
 						substitution.putAll(unification);
 						result = result | findAllSubstitions(allSubstitutions, substitution, copy, facts);
 					} // if

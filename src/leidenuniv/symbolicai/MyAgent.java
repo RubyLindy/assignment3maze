@@ -127,7 +127,11 @@ public class MyAgent extends Agent {
 			} // else if eql
 
 			else if (condition.neg) {
-				
+				for (Predicate fact : facts.values()) {
+					if (unifiesWith(condition, fact) != null) {
+						//TODO shortcut vd opdracht
+					}
+				}
 			}
 
 			else {

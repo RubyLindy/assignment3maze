@@ -129,10 +129,10 @@ public class MyAgent extends Agent {
 			else if (condition.neg) {
 				for (Predicate fact : facts.values()) {
 					if (unifiesWith(condition, fact) != null) {
-						//TODO shortcut vd opdracht
-					}
-				}
-			}
+						return false;
+					}//if
+				}//for
+			}//else if neg
 
 			else {
 				for (Predicate fact : facts.values()) {

@@ -126,6 +126,10 @@ public class MyAgent extends Agent {
 					result = findAllSubstitions(allSubstitutions, substitution, conditions, facts);
 			} // else if eql
 
+			else if (condition.neg) {
+				
+			}
+
 			else {
 				for (Predicate fact : facts.values()) {
 					unification = unifiesWith(condition, fact);

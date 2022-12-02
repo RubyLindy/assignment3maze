@@ -1,4 +1,4 @@
-package leidenuniv.symbolicai;
+ bapackage leidenuniv.symbolicai;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +40,10 @@ public abstract class Agent {
 		sense(w);
 		think(believes,desires,intentions);
 		act(w, decide(HUMAN_DECISION), believes, desires);
+		// Predicate a = new Predicate("human(joost)");
+		// Predicate b = new Predicate("human(joost)");
+		// System.out.println(unifiesWith(a, b));
+
 	}
 	public void sense(Maze w) {
 		//The world generates percepts for you every cycle

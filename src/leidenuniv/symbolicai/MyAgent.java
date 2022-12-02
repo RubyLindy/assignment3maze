@@ -97,7 +97,6 @@ public class MyAgent extends Agent {
 
 		if (conditions.isEmpty()) {
 			copySubstitution.putAll(substitution);
-
 			allSubstitutions.add(copySubstitution);
 			return true;
 
@@ -159,18 +158,24 @@ public class MyAgent extends Agent {
 		// If no subst is found it returns null
 
 		HashMap<String, String> s = new HashMap<String, String>();
-		if (!(p.getName().equals(f.getName())) || !(p.getTerms().size() == f.getTerms().size())) {
+		boolean uni = true;
+		if (!(p.getName().equals(f.getName())) || 
+		    !(p.getTerms().size() == f.getTerms().size())) {
 			return null;
-		} // if name
+		} // if name and terms size
 		for (int i = 0; i < p.getTerms().size(); i++) {
-			if ((!p.getTerm(i).toString().equals(f.getTerm(i).toString()))) {
-				if ((s.containsKey(p.getTerm(i).toString()) && s.get(p.getTerm(i).toString()) != f.getTerm(i).toString())|| !p.getTerm(i).var) {
-					return null;
-				} // if
+			if (!p.getTerm(i).toString().equals(f.getTerm(i).toString())) {
+				if ((s.containsKey(p.getTerm(i).toString()) && 
+				     s.get(p.getTerm(i).toString()) != f.getTerm(i).toString()) || 
+					 !p.getTerm(i).var) {
+					uni = false;
+				}//if 
 				s.put(p.getTerm(i).toString(), f.getTerm(i).toString());
-			}// if niet dezelde term
+			}//if not the same term
 		}// for
-		return s;
+		if (uni)
+			return s;
+		return null;
 	}
 
 	@Override

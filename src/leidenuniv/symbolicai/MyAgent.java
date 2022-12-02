@@ -39,7 +39,7 @@ public class MyAgent extends Agent {
 				// copy.add(sentence); //niet per se nodig
 				for (int j = 0; j < sentence.conclusions.size(); j++) {
 					facts.put(sentence.conclusions.get(j).toString(),
-							sentence.conclusions.get(j));
+							  sentence.conclusions.get(j));
 
 				} // for j
 			} // if
@@ -67,8 +67,8 @@ public class MyAgent extends Agent {
 				} // if any substitutions
 				if (facts.size() != count)
 					op = false;
-
-			} // for i
+				} // for i
+				// System.out.println(copy); //text
 		} // while
 
 		return copy;
@@ -93,9 +93,9 @@ public class MyAgent extends Agent {
 		// so that a predicate form the conditions unifies with a fact)
 
 		boolean result;
+		HashMap<String, String> copySubstitution = new HashMap<String, String>();
 
 		if (conditions.isEmpty()) {
-			HashMap<String, String> copySubstitution = new HashMap<String, String>();
 			copySubstitution.putAll(substitution);
 
 			allSubstitutions.add(copySubstitution);
@@ -131,10 +131,12 @@ public class MyAgent extends Agent {
 
 			else {
 				for (Predicate fact : facts.values()) {
+					copySubstitution = new HashMap<String, String>();
+					copySubstitution.putAll(substitution);
 					unification = unifiesWith(condition, fact);
 					if (unification != null) {
-						substitution.putAll(unification);
-						result = result | findAllSubstitions(allSubstitutions, substitution, copy, facts);
+						copySubstitution.putAll(unification);
+						result = result | findAllSubstitions(allSubstitutions, copySubstitution, copy, facts);
 					} // if
 				} // for
 			} // else
@@ -157,18 +159,17 @@ public class MyAgent extends Agent {
 		// If no subst is found it returns null
 
 		HashMap<String, String> s = new HashMap<String, String>();
-		boolean uni = false;
-		if (!(p.getName().equals(f.getName()))) {
+		if (!(p.getName().equals(f.getName())) || !(p.getTerms().size() == f.getTerms().size())) {
 			return null;
 		} // if name
 		for (int i = 0; i < p.getTerms().size(); i++) {
-			if (p.getTerm(i).var) {
+			if ((!p.getTerm(i).toString().equals(f.getTerm(i).toString()))) {
+				if ((s.containsKey(p.getTerm(i).toString()) && s.get(p.getTerm(i).toString()) != f.getTerm(i).toString())|| !p.getTerm(i).var) {
+					return null;
+				} // if
 				s.put(p.getTerm(i).toString(), f.getTerm(i).toString());
-				uni = true;
-			} // if
-		} // for
-		if (!uni)
-			return null;
+			}// if niet dezelde term
+		}// for
 		return s;
 	}
 

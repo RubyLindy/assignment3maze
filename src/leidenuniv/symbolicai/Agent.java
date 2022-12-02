@@ -1,4 +1,4 @@
- bapackage leidenuniv.symbolicai;
+bapackage leidenuniv.symbolicai;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -13,4 +13,5 @@ location(X) & keyAt(X,K) > _grab(X,K)
 location(X) & link(X,Y) > _goto(X,Y) 
 
 doorAt(X,K) > *haveKey(K)
-haveKey(K) > *doorAt(X,K)
+haveKey(K) & doorAt(X,K) > *location(X)
+link(X,Y) & !visited(Y) > *visited(Y)

@@ -4,7 +4,7 @@
 #This is how possible postconditions are triggered. Note that you cannot form new intentions in this phase, so, world actions cannot be postconditions of actions!!!
 #Add your action postcondition rules below:
 
-open(X,K) > -doorAt(X,K) & ~doorAt(X,K)
+open(X,K) > -doorAt(X,K) & ~location(X)
 grab(X,K) > -keyAt(X,K) & +haveKey(K) & ~haveKey(K)
-goto(X,Y) > -location(X)
+goto(X,Y) > -location(X) & ~visited(Y)
 

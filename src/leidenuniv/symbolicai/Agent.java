@@ -52,9 +52,6 @@ public abstract class Agent {
 		sense(w);
 		think(believes, desires, intentions);
 		act(w, decide(HUMAN_DECISION), believes, desires);
-		// Predicate a = new Predicate("human(joost)");
-		// Predicate b = new Predicate("human(joost)");
-		// System.out.println(unifiesWith(a, b));
 
 	}
 

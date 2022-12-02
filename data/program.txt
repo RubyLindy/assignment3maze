@@ -11,3 +11,6 @@
 location(X) & haveKey(K) & doorAt(X,K) > _open(X,K) 
 location(X) & keyAt(X,K) > _grab(X,K)
 location(X) & link(X,Y) > _goto(X,Y) 
+
+doorAt(X,K) > *haveKey(K)
+haveKey(K) > *doorAt(X,K)

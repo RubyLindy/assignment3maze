@@ -36,7 +36,6 @@ public class MyAgent extends Agent {
 		for (int i = 0; i < kb.rules().size(); i++) {
 			Sentence sentence = kb.rules().get(i);
 			if (sentence.conditions.isEmpty()) {
-				// copy.add(sentence); //niet per se nodig
 				for (int j = 0; j < sentence.conclusions.size(); j++) {
 					facts.put(sentence.conclusions.get(j).toString(),
 							  sentence.conclusions.get(j));
@@ -53,7 +52,6 @@ public class MyAgent extends Agent {
 				conditions = new Vector<Predicate>();
 				HashMap<String, String> substitution = new HashMap<String, String>();
 				conditions = kb.rules().get(i).conditions;
-				// findAllSubstitions(allSubstitutions, substitution, conditions, facts);
 				if (findAllSubstitions(allSubstitutions, substitution, conditions, facts)) {
 					for (HashMap<String, String> sub : allSubstitutions) {
 						for (int j = 0; j < kb.rules().get(i).conclusions.size(); j++) {
@@ -68,7 +66,6 @@ public class MyAgent extends Agent {
 				if (facts.size() != count)
 					op = false;
 				} // for i
-				// System.out.println(copy); //text
 		} // while
 
 		return copy;
@@ -165,7 +162,7 @@ public class MyAgent extends Agent {
 		} // if name and terms size
 		for (int i = 0; i < p.getTerms().size(); i++) {
 			if (!p.getTerm(i).toString().equals(f.getTerm(i).toString())) {
-				if ((s.containsKey(p.getTerm(i).toString()) && 
+				if ((s.containsKey(p.getTerm(i).toString()) &&
 				     s.get(p.getTerm(i).toString()) != f.getTerm(i).toString()) || 
 					 !p.getTerm(i).var) {
 					uni = false;
